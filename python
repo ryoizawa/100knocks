@@ -1,0 +1,13 @@
+// 63
+
+df_tmp = df_product.copy()
+df_tmp['unit_profit_rate'] = \
+        (df_tmp['unit_price'] - df_tmp['unit_cost']) / df_tmp['unit_price']
+df_tmp['unit_profit_rate'].mean(skipna=True)
+
+
+// 64
+
+df_tmp = df_product.copy()
+df_tmp['unit_profit'] = df_product['unit_price'] - df_product['unit_cost']
+df_tmp.head(10)
