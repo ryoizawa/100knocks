@@ -11,3 +11,12 @@ df_tmp['unit_profit_rate'].mean(skipna=True)
 df_tmp = df_product.copy()
 df_tmp['unit_profit'] = df_product['unit_price'] - df_product['unit_cost']
 df_tmp.head(10)
+
+
+// 65
+
+df_tmp = df_product[['product_cd', 'unit_price', 'unit_cost']].copy()
+df_tmp['new_price'] = np.floor(df_tmp['unit_cost'] / 0.7)
+df_tmp['new_profit_rate'] = \
+            (df_tmp['new_price'] - df_tmp['unit_cost'] / df_tmp['new_price'])
+df_tmp.head(10)
