@@ -20,3 +20,12 @@ df_tmp['new_price'] = np.floor(df_tmp['unit_cost'] / 0.7)
 df_tmp['new_profit_rate'] = \
             (df_tmp['new_price'] - df_tmp['unit_cost'] / df_tmp['new_price'])
 df_tmp.head(10)
+
+
+// 66
+
+df_tmp = df_product[['product_cd', 'unit_price', 'unit_cost']].copy()
+df_tmp['new_price'] = np.round(df_tmp['unit_cost'] / 0.7)
+df_tmp['new_profit-rate'] = \
+            (df_tmp['new_price'] - df_tmp['unit_cost']) / df_tmp['new_price']
+df_tmp.head(10)
