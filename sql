@@ -45,3 +45,20 @@ SELECT
     ,(new_price - unit_cost) / new_price AS new_price_rate
 FROM new_price_tbl
 LIMIT 10
+
+// 67
+
+%%sql
+WITH new_price_tbl AS (
+    SELECT
+        product_cd
+        ,unit_price
+        ,unit_cost
+        ,CEIL(unit_cost / 0.7) AS new_price
+    FROM product
+)
+SELECT
+    *
+    ,(new_price - unit_cost) / new_price AS new_profit_rate
+FROM new_price_tbl
+LIMIT 10
