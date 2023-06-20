@@ -38,3 +38,9 @@ df_tmp['new_price'] = np.ceil(df_tmp['unit_cost'] / 0.7)
 df_tmp['new_profit_rate'] = \
             (df_tmp['new_price'] - df_tmp['unit_cost']) / df_tmp['new_price']
 df_tmp.head(10)
+
+// 68
+
+df_tmp = df_product[['product_cd', 'unit_price']].copy()
+df_tmp['tax_price'] = np.floor(df_tmp['unit_price'] * 1.1)
+df_tmp.head(10)
