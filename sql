@@ -69,3 +69,33 @@ SELECT *
     ,TRUNC(unit_price * 1.1) AS price_with_tax
 FROM product
 LIMIT 10
+
+// 69
+
+WITH amount_all AS (
+    SELECT
+        customer_id
+        ,SUM(amount) AS sum_all
+    FROM receipt
+    GROUP BY customer_id
+),
+amount_07 AS (
+    SELECT
+        r.customer_id
+        ,SUM(r.amount) AS sum_07
+    FROM receipt r
+    JOIN product p
+    ON r.product_cd = p.product_cd
+    WHERE
+        p.category_major_cd = '07'
+    GROUP BY customer_id
+)
+SELECT
+    amount_all.customer_id
+    ,sum_all
+    ,sum_07
+    ,sum_07 * 1.0 / sum_all AS sales_rate
+FROM amount_all
+JOIN amount_07
+ON amount_all.customer_id = amount_07.customer_id
+LIMIT 10
