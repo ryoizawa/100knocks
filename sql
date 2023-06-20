@@ -62,3 +62,10 @@ SELECT
     ,(new_price - unit_cost) / new_price AS new_profit_rate
 FROM new_price_tbl
 LIMIT 10
+
+// 68
+    
+SELECT *
+    ,TRUNC(unit_price * 1.1) AS price_with_tax
+FROM product
+LIMIT 10
