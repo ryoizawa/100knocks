@@ -44,3 +44,14 @@ df_tmp.head(10)
 df_tmp = df_product[['product_cd', 'unit_price']].copy()
 df_tmp['tax_price'] = np.floor(df_tmp['unit_price'] * 1.1)
 df_tmp.head(10)
+
+// 70
+
+df_tmp = df_receipt[['customer_id', 'sales_ymd']].drop_duplicates()
+df_tmp = pd.merge(df_tmp, df_customer[['customer_id', 'application_date']], how='inner', on='customer_id')
+
+df_tmp['sales_ymd'] = pd.to_datetime(df_tmp['sales_ymd'].astype('str'))
+df_tmp['application_date'] = pd.to_datetime(df_tmp['application_date'])
+df_tmp['elapsed_days'] = df_tmp['sales_ymd'] - df_tmp['application_date']
+df_tmp['elapsed_days'] = df_tmp['elapsed_days'].dt.days
+df_tmp.head(10)
