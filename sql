@@ -99,3 +99,22 @@ FROM amount_all
 JOIN amount_07
 ON amount_all.customer_id = amount_07.customer_id
 LIMIT 10
+
+// 70
+
+WITH receipt_distinct AS (
+    SELECT
+        DISTINCT customer_id
+        , sales_ymd
+    FROM receipt
+)
+SELECT
+    r.customer_id
+    ,r.sales_ymd
+    ,c.application_date
+    ,EXTRACT(DAY FROM (TO_TIMESTAMP(CAST(r.sales_ymd AS VARCHAR), 'YYYYMMDD')
+                       - TO_TIMESTAMP(c.application_date, 'YYYYMMDD'))) AS elaped_days
+FROM receipt_distinct r
+JOIN customer c
+ON r.customer_id = c.customer_id
+LIMIT 10
