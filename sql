@@ -118,3 +118,51 @@ FROM receipt_distinct r
 JOIN customer c
 ON r.customer_id = c.customer_id
 LIMIT 10
+
+//71
+
+WITH receipt_distinct AS (
+    SELECT DISTINCT
+        customer_id
+        ,sales_ymd
+    FROM receipt
+),
+time_age_tbl AS (
+    SELECT
+        c.customer_id
+        ,r.sales_ymd
+        ,c.application_date
+        ,AGE(TO_TIMESTAMP(CAST(r.sales_ymd AS VARCHAR), 'YYYYMMDD'),
+             TO_TIMESTAMP(c.application_date, 'YYYYMMDD')) AS time_age
+    FROM receipt_distinct r
+    JOIN customer c
+    ON r.customer_id = c.customer_id
+)
+SELECT
+    customer_id
+    ,sales_ymd
+    ,application_date
+    ,EXTRACT(YEAR FROM time_age) * 12
+        + EXTRACT(MONTH FROM time_age) AS elapsed_months
+FROM time_age_tbl
+LIMIT 10
+
+// 72
+
+WITH receipt_distinct AS (
+    SELECT DISTINCT
+        customer_id
+        ,sales_ymd
+    FROM receipt
+)
+SELECT
+    c.customer_id
+    ,r.sales_ymd
+    ,c.application_date
+    ,EXTRACT(YEAR FROM AGE(
+        TO_TIMESTAMP(CAST(r.sales_ymd AS VARCHAR), 'YYYYMMDD'),
+        TO_TIMESTAMP(c.application_date, 'YYYYMMDD'))) AS elapsed_years
+FROM receipt_distinct r
+JOIN customer c
+ON r.customer_id = c.customer_id
+LIMIT 10
